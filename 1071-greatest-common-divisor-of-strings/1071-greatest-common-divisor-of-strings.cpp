@@ -1,20 +1,5 @@
 class Solution {
 public:
-    bool condtn(string str1, string str2){
-        set<char> s;
-        set<char> s1;
-        for(auto i:str1){
-            s.insert(i);
-        }
-        for(auto i:str2){
-            s1.insert(i);
-        }
-        if(s.size()==1 && s1.size()==1){
-            return true;
-        }
-        return false;
-    }
-    
     string gcdOfStrings(string str1, string str2) {
         
         string ans = "";
