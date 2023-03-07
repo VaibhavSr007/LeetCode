@@ -3,7 +3,7 @@ public:
     long long minimumTime(vector<int>& time, int totalTrips) {
         
         long long i = 1;  // min time taken can be 1 as min_time[i] * min_trip_time = 1*1 = 1
-        long long j = 1+1e14;// max time taken can be 10^14 as max_time[i] * max_trip_time = 10^7 * 10^7 = 10^14
+        long long j = 1e14;// max time taken can be 10^14 as max_time[i] * max_trip_time = 10^7 * 10^7 = 10^14
         
         // now we know our ans can lie b/w i and j only so we check what is the min time in which we
         // can do the tottal trips using binary search
