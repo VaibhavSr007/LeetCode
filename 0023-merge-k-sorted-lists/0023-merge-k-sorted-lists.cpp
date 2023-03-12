@@ -81,6 +81,6 @@ public:
             if(i != NULL)
                 tail = merge2List(i,tail);
         }
-        return ans->next;
+        return tail->next;
     }
 };
