@@ -10,24 +10,36 @@
  */
 class Solution {
 public:
-    ListNode* insertionSortList(ListNode* head) {
-        
-        ListNode *ans = new ListNode(-1);
-        ListNode *temp = head;
+    void insert(ListNode* ans, ListNode* head){
+        while(ans->next && ans->next->val < head->val){
+            ans = ans->next;
+        }
+        head->next = ans->next;
         ans->next = head;
+    }
+    ListNode* insertionSortList(ListNode* head) {
+        if(head->next==NULL){ return head;}
+        ListNode *ans = new ListNode(INT_MIN);
         
-        vector<int> v;
-        while(temp){
-            v.push_back(temp->val);
-            temp = temp->next;
+        while(head){
+            ListNode *temp = head;
+            head = head->next;
+            insert(ans,temp);
         }
-        sort(begin(v),end(v));
-        temp = head;
-        int i =0;
-        while(temp){
-            temp->val = v[i++];
-            temp = temp->next;
-        }
-        return head;
+        return ans->next;
+        
+        // vector<int> v;
+        // while(temp){
+        //     v.push_back(temp->val);
+        //     temp = temp->next;
+        // }
+        // sort(begin(v),end(v));
+        // temp = head;
+        // int i =0;
+        // while(temp){
+        //     temp->val = v[i++];
+        //     temp = temp->next;
+        // }
+        // return head;
     }
 };
