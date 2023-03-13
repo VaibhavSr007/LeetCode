@@ -11,11 +11,12 @@
 class Solution {
 public:
     void insert(ListNode* ans, ListNode* head){
-        while(ans->next && ans->next->val < head->val){
-            ans = ans->next;
+        ListNode *cur = ans;
+        while(cur->next && cur->next->val < head->val){
+            cur = cur->next;
         }
-        head->next = ans->next;
-        ans->next = head;
+        head->next = cur->next;
+        cur->next = head;
     }
     ListNode* insertionSortList(ListNode* head) {
         if(head->next==NULL){ return head;}
