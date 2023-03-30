@@ -33,17 +33,29 @@ public:
 //         }
 //         return false;
         
-        map<ListNode*, int> mp;
-        ListNode* cur = head;
-        while(cur){
-            if(mp.find(cur) != mp.end()){
-                cout<<cur->val<<" ";
+//         map<ListNode*, int> mp;
+//         ListNode* cur = head;
+//         while(cur){
+//             if(mp.find(cur) != mp.end()){        // map or set approach
+//                 cout<<cur->val<<" ";
+//                 return true;
+//             }
+//             mp[cur] = cur->val;
+//             cur = cur->next;
+//         }
+        
+//         return false;
+        
+        ListNode* slow = head;
+        ListNode* fast = head;
+        
+        while(fast && fast->next){
+            fast = fast->next->next;
+            slow = slow->next;
+            if(slow == fast){
                 return true;
             }
-            mp[cur] = cur->val;
-            cur = cur->next;
         }
-        
         return false;
     }
 };
