@@ -59,39 +59,73 @@ public:
 //         }
         
 //         return true;
+
+    // ***************************************************************************
+        // ListNode* prev = NULL;
+//         ListNode* next = NULL;
+//         ListNode* cur = head;
+//         ListNode* ans = new ListNode(-1);
+//         ListNode* copy = ans;
+        
+//         while(cur){
+//             ListNode* add = new ListNode(cur->val);  reverse linked list and compare 
+//             copy->next = add;
+//             copy = copy->next;
+//             cur = cur->next;
+//         }
+        
+//         cur = head;
+//         ans = ans->next;
+//         copy = ans;
+//         while(copy){
+//             next = copy->next;
+//             copy->next = prev;
+//             prev = copy;
+//             copy = next;
+//         }
+        
+//         ans = prev;
+//         while(ans){
+//             if(ans->val != head->val){
+//                 return false;
+//             }
+//             ans = ans->next;
+//             head = head->next;
+//         }
+        
+//         return true; 
+        
+        if(!head || !head->next){
+            return true;
+        }
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* prev1 = NULL;
+        ListNode* next = NULL;
+        
+        while(fast && fast->next){
+            fast = fast->next->next;
+            prev1 = slow;
+            slow = slow->next;
+        }
         
         ListNode* prev = NULL;
-        ListNode* next = NULL;
-        ListNode* cur = head;
-        ListNode* ans = new ListNode(-1);
-        ListNode* copy = ans;
-        
-        while(cur){
-            ListNode* add = new ListNode(cur->val);
-            copy->next = add;
-            copy = copy->next;
-            cur = cur->next;
+        while(slow){
+            next = slow->next;
+            slow->next = prev;
+            prev = slow;
+            slow = next;
         }
         
-        cur = head;
-        ans = ans->next;
-        copy = ans;
-        while(copy){
-            next = copy->next;
-            copy->next = prev;
-            prev = copy;
-            copy = next;
-        }
-        
-        ans = prev;
-        while(ans){
-            if(ans->val != head->val){
+        prev1->next = prev;
+        ListNode* mid = prev;
+        while(head != mid){
+            if(head->val != prev->val){
                 return false;
             }
-            ans = ans->next;
+            prev = prev->next;
             head = head->next;
         }
-        
-        return true; 
-    }
+        return true;
+    }   
 };
