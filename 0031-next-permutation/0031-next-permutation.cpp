@@ -28,6 +28,28 @@ public:
 //             reverse(nums.begin()+(x+1),nums.end());
 //         }  
         
-        next_permutation(nums.begin(),nums.end());
+        // next_permutation(nums.begin(),nums.end());
+        int idx = -1;
+        for(int i=nums.size()-2; i>=0; i--){
+            if(nums[i] < nums[i+1]){
+                idx  = i;
+                break;
+            }
+        }
+        
+        if(idx == -1){
+            reverse(nums.begin(),nums.end());
+        }
+        else{
+            int y;
+            for(int i=nums.size()-1; i>idx; i--){
+                if(nums[i] > nums[idx]){
+                    y = i;
+                    break;
+                }
+            }
+            swap(nums[idx],nums[y]);
+            reverse(nums.begin()+(idx+1), nums.end());
+        }
     }
 };
