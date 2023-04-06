@@ -65,24 +65,24 @@ public:
         
         // sort(nums.begin(),nums.end());   stl soln
         
-        int s =0;
-        int m=0;
-        int e = nums.size()-1;
+//         int s =0;
+//         int m=0;
+//         int e = nums.size()-1;
         
-        while(m<=e){
-            if(nums[m]==0){             // dutch national flag approach  best
-                swap(nums[m],nums[s]);
-                s++;
-                m++;
-            }
-            else if(nums[m]==1){
-                m++;
-            }
-            else if(nums[m]==2){
-                swap(nums[e],nums[m]);
-                e--;
-            }
-        }
+//         while(m<=e){
+//             if(nums[m]==0){             // dutch national flag approach  best
+//                 swap(nums[m],nums[s]);
+//                 s++;
+//                 m++;
+//             }
+//             else if(nums[m]==1){
+//                 m++;
+//             }
+//             else if(nums[m]==2){
+//                 swap(nums[e],nums[m]);
+//                 e--;
+//             }
+//         }
         
 //         int zero = 0;
 //         int one  = 0;
@@ -117,6 +117,20 @@ public:
 //                 two--;
 //             }
 //         }
-        
+        int s=0, m=0, e=nums.size()-1;
+        while(m<=e){
+            if(nums[m]==0){
+                swap(nums[s],nums[m]);
+                s++;
+                m++;
+            }
+            else if(nums[m]==1){
+                m++;
+            }
+            else{
+                swap(nums[e],nums[m]);
+                e--;
+            }
+        }
     } 
 };
