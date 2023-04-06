@@ -25,10 +25,11 @@ public:
 //                 }
 //             }
 //         }
+        
         vector<int> v;
         for(int i=0; i<nums.size(); i++){
-            for(int j=0; j<nums[0].size(); j++){
-                if(nums[i][j]==0){
+            for(int j=0; j<nums[i].size(); j++){
+                if(nums[i][j] == 0){
                     v.push_back(i);
                     v.push_back(j);
                 }
@@ -37,7 +38,7 @@ public:
         
         for(int i=0; i<v.size(); i++){
             if(i%2==0){
-                for(int j=0; j<nums[0].size(); j++){
+                for(int j=0; j<nums[v[i]].size(); j++){
                     nums[v[i]][j] = 0;
                 }
             }
