@@ -44,13 +44,32 @@ public:
         
 //         return false;
         
-        set<int> s;
-        for(int i=0; i<nums.size(); i++){
-            for(int j=0; j<nums[i].size(); j++){
-                s.insert(nums[i][j]);
-            }
-        }
+//         set<int> s;
+//         for(int i=0; i<nums.size(); i++){
+//             for(int j=0; j<nums[i].size(); j++){
+//                 s.insert(nums[i][j]);
+//             }
+//         }
         
-        return s.find(target) != s.end();
+//         return s.find(target) != s.end();
+        
+        int s = 0;
+        int e = nums.size()*nums[0].size()-1;
+        while(s <= e){
+            int m = s + (e-s)/2;
+            int x = m/nums[0].size();
+            int y = m%nums[0].size();
+            if(nums[x][y] == target){
+                return true;
+            }
+            else if(nums[x][y] < target){
+                s = m+1;
+            }
+            else{
+                e = m-1;
+            }
+            cout<<s<<" ";
+        }
+        return false;
     }
 };
