@@ -18,21 +18,21 @@ public:
 //         }
 //         return ans;
         
-        int count = 0;
+        
+        // Moore's voting algorithm
+        int cnt = 0;
         int ele = 0;
         
         for(int i=0; i<nums.size(); i++){
-            
-            
-            if(nums[i] == ele){
-                count++;
+            if(nums[i] == ele){ // if an ele comes again increase its cnt
+                cnt++;
             }
-            else if(count == 0){
+            else if(cnt == 0){ // if cnt has become 0 this means no element is in majority therefore we 
+                cnt = 1;       // assume new element as our majority ele and make cnt 1 
                 ele = nums[i];
-                count = 1;
             }
-            else{
-                count--;
+            else{   // if another element comes other than assumed majority ele we reduce the cnt of 
+                cnt--;  // assumed majority ele
             }
         }
         return ele;
