@@ -27,7 +27,7 @@ public:
             
             for(int i=0; i<n; i++){
                 auto temp = q.front().first;
-                long long index = q.front().second - right;
+                long long index = q.front().second - left;
                 q.pop();
                 if(temp->left){
                     q.push({temp->left, 2*index+1});
