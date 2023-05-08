@@ -16,16 +16,14 @@ public:
             return 0;
         }
         
-        int left=0, right=0;
-        if(root->left)
-            left = sum(root->left,mp,tot);
-        if(root->right)
-            right = sum(root->right,mp,tot);
+        int left = sum(root->left,mp,tot);
+        int right = sum(root->right,mp,tot);
         
         tot = left + right + root->val;
         mp[tot]++;
         return tot;
     }
+    
     vector<int> findFrequentTreeSum(TreeNode* root) {
         map<int,int> mp;
         int t=0;
@@ -33,7 +31,7 @@ public:
         int maxi = INT_MIN;
         vector<int> v;
         for(auto i:mp){
-            cout<<i.first<<":"<<i.second<<" ";
+            // cout<<i.first<<":"<<i.second<<" ";
             maxi = max(maxi,i.second);
         }
         
