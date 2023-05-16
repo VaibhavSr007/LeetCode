@@ -16,20 +16,35 @@ public:
         }
         
         ListNode *cur = head;
-        ListNode *dum = new ListNode();
-        ListNode *temp = dum;
+//         ListNode *dum = new ListNode();
+//         ListNode *temp = dum;
         
-        while(cur!=NULL && cur->next!=NULL){
-            temp->next = cur->next;
-            cur->next = temp->next->next;
-            temp->next->next = cur;
-            temp = cur;
-            cur= cur->next;
+//         while(cur!=NULL && cur->next!=NULL){
+//             temp->next = cur->next;
+//             cur->next = temp->next->next;
+//             temp->next->next = cur;
+//             temp = cur;
+//             cur= cur->next;
+//         }
+        
+        ListNode *temp = cur->next;
+        ListNode *ans = new ListNode(-1);
+        ListNode* prev = ans;
+        
+        while(cur && cur->next){
+            cur->next = cur->next->next;
+            temp->next = cur;
+            prev->next = temp;
+            prev = cur;
+            cur = cur->next;
+            if(cur)
+                temp = cur->next;
+            
         }
         
+        return ans->next;
+        // return dum->next;
         
-        
-        return dum->next;
         
         
 //         vector<int> v;
