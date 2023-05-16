@@ -10,6 +10,7 @@ public:
         solve(op,nums,ans,idx+1);  // exclude
         op.push_back(nums[idx]);   // include
         solve(op,nums,ans,idx+1);  // thn call
+        op.pop_back();
     }
         
     vector<vector<int>> subsets(vector<int>& nums) {
