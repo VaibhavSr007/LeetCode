@@ -1,16 +1,17 @@
 class Solution {
 public:
     
-    void solve(int idx, string s , int &rem, int sign){
+    int solve(int idx, string s , int &rem, int sign){
         if(idx >= s.length() || (s[idx] < '0' || s[idx] > '9')){
-            return ;
+            return rem;
         }
         
         int dig = (int(s[idx]) - '0')*sign;
-        if(sign == 1 && (rem > INT_MAX/10 || (rem == INT_MAX/10 && dig > INT_MAX%10)) ) {rem = INT_MAX; return;}
-        if(sign == -1 && (rem < INT_MIN/10 || (rem == INT_MIN/10 && dig < INT_MIN%10)) ) {rem = INT_MIN; return;}
+        if(sign == 1 && (rem > INT_MAX/10 || (rem == INT_MAX/10 && dig > INT_MAX%10)) ) {rem = INT_MAX; return rem;}
+        if(sign == -1 && (rem < INT_MIN/10 || (rem == INT_MIN/10 && dig < INT_MIN%10)) ) {rem = INT_MIN; return rem;}
         rem = rem*10 + dig;
-        solve(idx+1, s, rem, sign);
+        rem = solve(idx+1, s, rem, sign);
+        return rem;
         
     }
     int myAtoi(string s) {
@@ -56,7 +57,6 @@ public:
             idx++;
         }
         
-        solve(idx, s, rem, sign);
-        return rem;
+        return solve(idx, s, rem, sign);
     }
 };
