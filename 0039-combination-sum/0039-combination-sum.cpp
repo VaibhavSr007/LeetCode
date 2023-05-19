@@ -4,12 +4,12 @@ public:
         if(sum > target){
             return ;
         }
-        if(sum == target){
-            ans.push_back(op);
-            return ;
-        }
         
         if(idx >= nums.size()){
+            if(sum == target){
+                ans.push_back(op);
+                // return ;
+            }
             return ;
         }
         
