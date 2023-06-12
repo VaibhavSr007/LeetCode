@@ -1,40 +1,45 @@
 class Solution {
 public:
     vector<string> summaryRanges(vector<int>& nums) {
-        if(nums.size()==1){
+        int cnt = 0, i=0, j=0;
+        vector<string> ans;
+        if(nums.size()==0){
+            return {};
+        }else if(nums.size()==1){
             return {to_string(nums[0])};
         }
-        else if(nums.size()==0){ return {};
-                               }
-        int cnt = 1;
-        int st = nums[0];
-        int prev = nums[0];
-        vector<string> ans;
-        for(int i=1; i<nums.size(); i++){
-            if(nums[i] == nums[i-1] + 1){
-                cnt++;
-                prev = nums[i];
+        
+        while(j<nums.size()-1){
+            if(nums[j] == nums[j+1]-1){
+                j++;
             }
             else{
-                string val = "";
-                if(cnt == 1)
-                    val = to_string(st);
-                else
-                    val = to_string(st)+"->"+to_string(prev);
-                
-                ans.push_back(val);
-                prev = nums[i];
-                st = nums[i];
-                cnt = 1;
+                if(j-i == 0){
+                    string s = to_string(nums[j]);
+                    ans.push_back(s);
+                }
+                else{
+                    string s = to_string(nums[j]);
+                    string u = to_string(nums[i]);
+                    string t = u + "->" + s;
+                    ans.push_back(t);
+                }
+                j+=1;
+                i=j;
             }
         }
-        string val = "";
-        if(cnt == 1)
-            val = to_string(st);
-        else
-            val = to_string(st)+"->"+to_string(prev);
-
-        ans.push_back(val);
+        
+        if(j-i == 0){
+            string s = to_string(nums[j]);
+            ans.push_back(s);
+        }
+        else{
+            string s = to_string(nums[j]);
+            string u = to_string(nums[i]);
+            string t = u + "->" + s;
+            ans.push_back(t);
+        }
+        
         return ans;
     }
 };
