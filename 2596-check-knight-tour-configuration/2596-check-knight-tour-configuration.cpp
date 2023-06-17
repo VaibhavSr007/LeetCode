@@ -1,45 +1,35 @@
 class Solution {
 public:
-    
-    bool isValid(vector<vector<int>>& mat, int des, int p, int q){
-        int n = mat.size(), m=mat[0].size();
-        int X[8] = { 2, 1, -1, -2, -2, -1, 1, 2 };
-        int Y[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };
- 
-        for (int i = 0; i < 8; i++) {
- 
-            int x = p + X[i];
-            int y = q + Y[i];
-
-            if (x >= 0 && y >= 0 && x < n && y < m
-                && mat[x][y] == des){
-                return true;
-            }
-        }
-        return  false;
-    }
     bool checkValidGrid(vector<vector<int>>& grid) {
-        if(grid[0][0]!=0){
+        vector<vector<int>> d = {{2,1},{-2,1},{2,-1},{-2,-1},{-1,-2}, {-1,2},{1,-2},{1,2}};
+        if(grid[0][0] != 0){
             return false;
         }
-        map<int, vector<int>> mp;
-        int n = grid.size(), m=grid[0].size();
-        for(int i=0; i<grid.size(); i++){
-            for(int j=0; j<grid[i].size(); j++){
-                cout<<grid[i][j]<<" ";
-                mp[grid[i][j]].push_back(i);
-                mp[grid[i][j]].push_back(j);
+        int n = grid.size();
+        vector<vector<int>> vis(n,vector<int>(n,0));
+        queue<vector<int>> q;
+        q.push({0,0});
+        vis[0][0] = 1;
+        while(!q.empty()){
+            auto temp = q.front();
+            q.pop();
+            
+            for(auto i:d){
+                int x = temp[0] + i[0];
+                int y = temp[1] + i[1];
+                
+                if(x<n && y<n && x>=0 && y>=0 && grid[x][y]==grid[temp[0]][temp[1]]+1 && vis[x][y] ==0){
+                    vis[x][y] = 1;
+                    q.push({x,y});
+                }
             }
-            cout<<endl;
         }
-        cout<<endl;
-        bool chk;
         
-        for(int i=0; i<n*n-1; i++){
-            int x = mp[i][0];
-            int y = mp[i][1];
-            if(!isValid(grid,i+1,x,y)){
-                return false;
+        for(auto i:vis){
+            for(auto j:i){
+                if(j==0){
+                    return false;
+                }
             }
         }
         return true;
