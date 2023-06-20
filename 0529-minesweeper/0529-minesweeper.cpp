@@ -37,19 +37,17 @@ public:
             }
             else{
                 for(auto i:v){
-                    // if(board[i[0]][i[1]] < '1' && board[i[0]][i[1]] > '8'){
-                    //     q.push(i);
-                    //     vis[i[0]][i[1]] = -1;
-                    // }  
-                    q.push(i);
-                    vis[i[0]][i[1]] = -1;
+                    if(board[i[0]][i[1]] == 'E'){
+                        q.push(i);
+                        vis[i[0]][i[1]] = -1;
+                    }
+                   
                 }
             }
         }
         
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                // cout<<vis[i][j]<<" ";
                 if(board[i][j] == 'M'){
                     board[i][j] = 'M';
                 }
