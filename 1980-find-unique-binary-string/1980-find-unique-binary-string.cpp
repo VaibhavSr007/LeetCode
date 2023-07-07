@@ -1,20 +1,40 @@
 class Solution {
 public:
+    bool solve(int idx, int n, set<string> s, string &ans, string str){
+        if(idx == n){
+            if(s.find(str) == s.end()){
+                ans = str;
+                return true;
+            }
+            return false;
+        }
+        
+        str.push_back('1');
+        if(solve(idx+1, n, s, ans, str)){
+            return true;
+        }
+        str.pop_back();
+        
+        str.push_back('0');
+        if(solve(idx+1, n, s, ans, str)){
+            return true;
+        }
+        str.pop_back();
+        
+        
+        return false;
+    }
     string findDifferentBinaryString(vector<string>& nums) {
-        string ans = "";
+        string ans = "", str= "";
         set<string> s;
+        
         for(auto i:nums){
             s.insert(i);
         }
-        while(true){
-            for(int i=0; i<nums.size(); i++){
-                ans.push_back(char(rand()%2 + '0'));
-            }
-            if(s.find(ans)==s.end()){
-                return ans;
-            }
-            ans = "";
-        }
+        
+        int x = nums[0].length();
+        solve(0, x, s, ans, str);
+        
         return ans;
     }
 };
