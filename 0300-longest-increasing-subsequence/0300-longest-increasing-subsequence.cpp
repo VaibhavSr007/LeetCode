@@ -1,34 +1,34 @@
 class Solution {
 public:
-    vector<vector<int>> v;
-    int solve(vector<int>& nums, int i, int prev){
-        if(i==nums.size()){
+    int solve(int idx, int prev, vector<int>& nums, vector<vector<int>> &dp){
+        
+        if(idx == nums.size()){
             return 0;
         }
         
-        if(prev != -1 && v[i][prev] != -1){
-            return v[i][prev];
+        if(prev != -1 && dp[idx][prev] != -1){
+            return dp[idx][prev];
         }
         
-        int res;
-        if(prev == -1 || nums[i] > nums[prev]){
-            int take = 1 + solve(nums, i+1, i);
-            int no_take = solve(nums, i+1, prev);
-            res = max(no_take,take);
+        int ans;
+        if(prev == -1 || nums[idx] > nums[prev]){
+            int pick = 1 + solve(idx+1, idx, nums, dp);
+            int npick = solve(idx+1, prev, nums, dp);
+            ans = max(pick,npick);
         }
-        else{
-            res = solve(nums, i+1, prev);
+        else{  // since we came here it means, prev is there and is smaller than present idx value
+            ans = solve(idx+1, prev, nums, dp); // so we skip it
         }
         
-        if(prev != -1)
-            v[i][prev] = res;
+        if(prev != -1){
+            dp[idx][prev] = ans;
+        }
         
-        return res;
+        return ans;
     }
     
     int lengthOfLIS(vector<int>& nums) {
-        int n = nums.size();
-        v.resize(n+1, vector<int>(n+1,-1));
-        return solve(nums, 0 , -1);
+        vector<vector<int>> dp(2500, vector<int>(2500,-1));
+        return solve(0,-1, nums, dp);
     }
 };
