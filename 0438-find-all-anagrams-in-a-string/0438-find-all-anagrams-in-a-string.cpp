@@ -1,8 +1,8 @@
 class Solution {
 public:
-    bool chk(map<char,int> & mp){
+    bool chk(map<char, int> mp){
         for(auto i:mp){
-            if(i.second!=0){
+            if(i.second != 0){
                 return false;
             }
         }
@@ -10,37 +10,37 @@ public:
     }
     
     vector<int> findAnagrams(string s, string p) {
+       if(p.size() > s.size()){
+           return {};
+       } 
+        
         vector<int> ans;
-        map<char,int> mp;
+        map<char, int> mp;
         for(auto i:p){
             mp[i]++;
         }
         
+        
         for(int i=0; i<p.length(); i++){
-            if(mp.find(s[i])!=mp.end()){
-                mp[s[i]]--;
-            }
-        }
-        if(chk(mp)){
-            ans.push_back(0);
+            mp[s[i]]--;
         }
         
         
-        int i=0;
-        int j=p.length();
-        while(j<s.length()){
-            if(mp.find(s[i])!=mp.end()){
-                mp[s[i]]++;
-            }
-            if(mp.find(s[j])!=mp.end()){
-                mp[s[j]]--;
-            }
+        
+        int i=0, j=p.length();
+        while(j < s.length()){
+            
             if(chk(mp)){
-                ans.push_back(i+1);
+                ans.push_back(i);
             }
-            i++;
-            j++;
+            mp[s[i++]]++;
+            mp[s[j++]]--;
         }
+        
+        if(chk(mp)){
+            ans.push_back(i);
+        }
+        
         return ans;
     }
 };
