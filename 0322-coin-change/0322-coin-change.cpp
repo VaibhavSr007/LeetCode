@@ -1,33 +1,32 @@
 class Solution {
 public:
-    
-    int solve(int i, vector<int>& nums, int sum, vector<vector<int>> &dp){
-        if(sum == 0){
+    int solve(int idx, vector<int>& nums, int amt, vector<vector<int>> &dp){
+        if(amt == 0){
             return 0;
         }
-        if(i<0 || sum < 0){
+        
+        if(amt < 0 || idx == nums.size()){
             return INT_MAX-1;
         }
         
-        if(dp[i][sum] != -1){
-            return dp[i][sum];
+        if(dp[idx][amt] != -1){
+            return dp[idx][amt];
         }
         
-        int take = 1 + solve(i, nums, sum-nums[i], dp);
-        int no = solve(i-1, nums, sum, dp);
+        int pick = 1 + solve(idx, nums, amt-nums[idx], dp);
+        int npick = solve(idx+1, nums, amt, dp);
         
-        return dp[i][sum] = min(no,take);
+        
+        return dp[idx][amt] = min(pick, npick);
+        
     }
     
-    
-    int coinChange(vector<int>& coins, int amount) {
-        sort(coins.begin(),coins.end());  // this is just an optimization
-        vector<vector<int>> dp(13, vector<int>(10001, -1));
-        int ans = solve(coins.size()-1,coins,amount, dp);
-        if(ans == INT_MAX-1){
-            return -1;                        
-        }
-        return ans;
+    int coinChange(vector<int>& nums, int amount) {
+        int n = nums.size();
+        sort(nums.rbegin(), nums.rend());
+        vector<vector<int>> dp(n, vector<int> (amount+1, -1));
+        int ans =  solve(0, nums, amount, dp);
+        return ans == INT_MAX-1 ? -1 : ans ;
         
     }
 };
