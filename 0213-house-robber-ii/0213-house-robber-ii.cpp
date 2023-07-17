@@ -1,39 +1,45 @@
 class Solution {
 public:
-    int solve(int n, vector<int>& dp, vector<int>& nums){
-        if(n==0){
-            return nums[n];
-        }
-        if(n < 0){
-           return 0; 
-        }
-        if(dp[n] != -1){
-            return dp[n];
-        }
-        int pick = nums[n] + solve(n-2,dp,nums);
-        int nopick = solve(n-1,dp,nums);
+    int solve(int idx, int prev, vector<int>& nums, vector<vector<int>> &dp){
         
-        dp[n] = max(nopick,pick);
-        return dp[n];
+        if(idx == nums.size()){
+            return 0;
+        }
+        
+        if(prev != -1 && dp[idx][prev] != -1){
+            return dp[idx][prev];
+        }
+        
+        int ans;
+        if(prev == -1 || prev != idx-1){
+            int pick = nums[idx] + solve(idx+1, idx, nums, dp);
+            int npick = solve(idx+1, prev, nums, dp);
+            ans = max(pick, npick);
+        }
+        else{
+            ans = solve(idx+1, prev, nums, dp);
+        }
+        
+        if(prev != -1){
+            dp[idx][prev] = ans;
+        }
+        
+        return ans;
     }
     
     int rob(vector<int>& nums) {
-        if(nums.size()<=3){
-            int ans = *max_element(nums.begin(),nums.end());
-            return ans;
+        
+        if(nums.size() == 1){
+            return nums[0];
         }
-        int n = nums.size()-2;
-        vector<int> dp1(n+1,-1); // for maximum loot leaving last element
-        int last = nums[nums.size()-1];
-        nums.pop_back();
-        int without_last = solve(n,dp1,nums);
         
-        vector<int> dp2(n+1,-1); // for maximum loot leaving last element
-        int first = nums[0];
-        nums.erase(nums.begin());
-        nums.push_back(last);
-        int without_first = solve(n,dp2,nums);
-        
-        return max(without_first,without_last);
+        vector<int> nums1 = nums;
+        vector<int> nums2 = nums;
+        nums1.pop_back();
+        nums2.erase(nums2.begin());
+
+        vector<vector<int>> dp1(100, vector<int>(100, -1));
+        vector<vector<int>> dp2(100, vector<int>(100, -1));
+        return max(solve(0, -1, nums1, dp1), solve(0, -1, nums2, dp2));
     }
 };
