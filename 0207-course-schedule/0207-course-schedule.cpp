@@ -1,87 +1,37 @@
 class Solution {
 public:
-    
-    bool dfs(int idx, vector<int> &vis, map<int,vector<int>> &mp, vector<int> dvis, vector<int> &dp){
-        
-        vis[idx] = 1;
-        dvis[idx] = 1;
-        
-        if(dp[idx] != -1){
-            return dp[idx];
-        }
-        
-        for(auto i:mp[idx]){
-            if(dvis[i] == 1){
-                return true;
-            }
-            else{
-                if(dfs(i, vis, mp, dvis, dp)){
-                    return true;
-                }
-            }
-        }
-        dvis[idx] = 0;
-        
-        dp[idx] = 0;
-        return false;
-    }
-    
-    bool canFinish(int n, vector<vector<int>>& prerequisites) {
-        
-        vector<int> vis(n, 0);
-        map<int, vector<int>> mp;
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        map<int,vector<int>> mp;
+        vector<int> cnt(numCourses, 0);
+        queue<int> q;
         for(auto i:prerequisites){
-            mp[i[0]].push_back(i[1]);
+            mp[i[1]].push_back(i[0]);
+            cnt[i[0]]++;
         }
         
-        for(int i=0; i<n; i++){
-            if(vis[i] == 0){
-                vector<int> dvis(n, 0);
-                vector<int> dp(n, -1);
-                if(dfs(i, vis, mp, dvis, dp)){
-                    return false;
+        for(int i=0; i<cnt.size(); i++){
+            if(cnt[i] == 0){
+                q.push(i);
+            }
+        }
+        
+        int count = 0;
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            count++;
+            for(auto dep:mp[node]){
+                cnt[dep]--;
+                if(cnt[dep] == 0){
+                    q.push(dep);
                 }
             }
         }
         
-        return true;
+        if(count ==numCourses){
+            return true;
+        }
         
-//         queue<int> q;
-//         set<int> s;
-//         map<int, vector<int>> mp;
-//         vector<int> dependency(numCourses, 0);
-        
-//         for(auto i:prerequisites){
-//             mp[i[1]].push_back(i[0]);
-//             dependency[i[0]]++;
-//         }
-        
-//         for(int i=0; i<numCourses; i++){
-//             if(dependency[i] == 0){
-//                 s.insert(i);
-//                 q.push(i);
-//             }
-//         }
-        
-        
-        
-//         while(!q.empty()){
-//             auto temp = q.front();
-//             q.pop();
-
-//             for(auto i:mp[temp]){
-//                 dependency[i]--;
-//                 if(dependency[i] == 0){
-//                     s.insert(i);
-//                     q.push(i);
-//                 }
-//             }
-//         }
-        
-//         if(s.size() != numCourses){
-//             return false;
-//         }
-        
-//         return true;
+        return false;
     }
 };
