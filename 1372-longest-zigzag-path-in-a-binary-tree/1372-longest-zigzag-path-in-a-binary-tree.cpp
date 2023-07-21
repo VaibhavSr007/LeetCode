@@ -11,29 +11,27 @@
  */
 class Solution {
 public:
-    
-    void solve(TreeNode* root, int cnt,  bool dir, int& ans){
+    void solve(TreeNode* root, bool isLeft, int &ans, int len){
         if(!root){
             return ;
-        }       
+        }    
         
-        ans = max(ans, cnt);
-        if(dir){
-            solve(root->right, ++cnt, false, ans);
-            solve(root->left, 1, true, ans);
+        ans = max(ans,len);
+        
+        if(isLeft){
+            solve(root->left, true, ans, 1);
+            solve(root->right, false, ans, len+1);
         }
         else{
-            solve(root->left, ++cnt, true, ans);
-            solve(root->right, 1, false, ans);
+            solve(root->left, true, ans, len+1);
+            solve(root->right, false, ans, 1);
         }
-       
     }
+    
+    
     int longestZigZag(TreeNode* root) {
         int ans = 0;
-        int cnt  =0;
-        bool dir = true;
-        solve(root,cnt,dir,ans);
-        solve(root,cnt,!dir,ans);
+        solve(root, true, ans, 0);
         return ans;
     }
 };
