@@ -11,31 +11,32 @@
  */
 class Solution {
 public:
-     TreeNode* solve(vector<int> post, vector<int> in, int& idx, int st, int en, map<int,int>& mp){
-        if(idx >= in.size() || st > en){
-            return  NULL;
+    TreeNode* solve(int &idx, int st, int en, map<int,int> & mp, vector<int>& pos, vector<int>& in){
+        
+        if(idx < 0 || st > en){
+            return NULL;
         }
         
-        int ele = post[idx--];
-        int pos = mp[ele];
+        int element = pos[idx--]; 
+        int position = mp[element];
         
-        TreeNode* ans = new TreeNode(ele);
+        TreeNode* add = new TreeNode(element);
         
-        ans->right = solve(post,in,idx,pos+1,en,mp);
-        ans->left = solve(post,in,idx,st,pos-1,mp);
+        add->right = solve(idx, position+1, en, mp, pos , in);
+        add->left = solve(idx, st, position-1, mp, pos , in);
         
-        return ans;
+        return add;
     }
     
-    
-    TreeNode* buildTree(vector<int>& in, vector<int>& post) {
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         map<int,int> mp;
-        for(int i=0; i<in.size(); i++){
-            mp[in[i]] = i;
+        
+        for(int i=0; i<inorder.size(); i++){
+            mp[inorder[i]] = i;
         }
         
-        int idx = in.size()-1;
-        TreeNode* ans = solve(post,in,idx,0,in.size()-1,mp);
-        return ans;
+        int idx = postorder.size()-1, st = 0, en = postorder.size()-1;
+        return solve(idx, st, en, mp, postorder, inorder);
     }
+    
 };
