@@ -22,8 +22,8 @@ public:
         
         ans = max(ans, left + right + root->val);
         
-        int res = max(max(right, left) + root->val, 0);
-        return res;  
+        int res = max(max(right, left) + root->val, 0); // if the sum of subtree is less than zero we can
+        return res;                                   // ignore this tree 
     }
     
     int maxPathSum(TreeNode* root) {
