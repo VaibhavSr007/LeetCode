@@ -1,32 +1,30 @@
 class Solution {
 public:
     vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
-        set<int> a, b;
-        vector<int> x,y;
+        
+        set<int> s1, s2;
+        vector<int> v1, v2;
         
         for(auto i:nums1){
-            a.insert(i);
-        }
-        for(auto i:nums2){
-            b.insert(i);
+            s1.insert(i);
         }
         
-        for(auto i:nums1){
-            if(b.find(i) == b.end()){
-                x.push_back(i);
-            }
-        }
         for(auto i:nums2){
-            if(a.find(i) == a.end()){
-                y.push_back(i);
+            s2.insert(i);
+        }
+        
+        for(auto i:s1){
+            if(s2.find(i) == s2.end()){
+                v1.push_back(i);
             }
         }
         
-        sort(x.begin(),x.end());
-        x.erase(unique(x.begin(),x.end()),x.end());
-        sort(y.begin(),y.end());
-        y.erase(unique(y.begin(),y.end()),y.end());
+        for(auto i:s2){
+            if(s1.find(i) == s1.end()){
+                v2.push_back(i);
+            }
+        }
         
-        return {x,y};
+        return {v1,v2};
     }
 };
