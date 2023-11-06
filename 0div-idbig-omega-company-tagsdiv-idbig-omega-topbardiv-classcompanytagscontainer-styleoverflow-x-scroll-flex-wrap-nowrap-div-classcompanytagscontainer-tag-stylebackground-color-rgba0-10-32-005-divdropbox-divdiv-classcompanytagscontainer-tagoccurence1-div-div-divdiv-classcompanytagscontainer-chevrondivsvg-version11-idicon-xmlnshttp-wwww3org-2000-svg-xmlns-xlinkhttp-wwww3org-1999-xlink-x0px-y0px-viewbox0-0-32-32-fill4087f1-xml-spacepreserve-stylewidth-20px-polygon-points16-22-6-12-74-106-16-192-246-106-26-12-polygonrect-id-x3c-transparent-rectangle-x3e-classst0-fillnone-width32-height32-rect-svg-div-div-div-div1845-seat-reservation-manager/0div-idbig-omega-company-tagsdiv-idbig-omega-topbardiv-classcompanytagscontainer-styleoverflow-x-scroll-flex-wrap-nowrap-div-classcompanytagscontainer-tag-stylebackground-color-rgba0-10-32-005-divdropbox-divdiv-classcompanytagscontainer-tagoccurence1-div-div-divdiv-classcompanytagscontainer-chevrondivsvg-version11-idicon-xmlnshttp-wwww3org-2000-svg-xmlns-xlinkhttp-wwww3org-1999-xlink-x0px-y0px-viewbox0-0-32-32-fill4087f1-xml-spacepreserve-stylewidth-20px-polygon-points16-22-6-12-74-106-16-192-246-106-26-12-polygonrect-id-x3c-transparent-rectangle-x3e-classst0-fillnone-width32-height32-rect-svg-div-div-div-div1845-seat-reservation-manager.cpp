@@ -1,16 +1,16 @@
 class SeatManager {
 public:
     priority_queue<int, vector<int>, greater<int> > pq;
-    vector<int> v;
+    // vector<int> v;
     
     SeatManager(int n) {
         for(int i=1; i<=n; i++){
             pq.push(i);
         }
         
-        for(int i=0; i<=n; i++){
-            v.push_back(0);
-        }
+        // for(int i=0; i<=n; i++){
+        //     v.push_back(0);
+        // }
         
     }
     
